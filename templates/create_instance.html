@@ -1,0 +1,35 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+    {% include 'navigation.html' %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Create">
+    </form>
+
+    <table border="1" cellspacing="0" cellpadding="5">
+        <thead>
+            <td>ID</td>
+            <td>Anime Name</td>
+            <td>Rating</td>
+            <td>Watching</td>
+            <td>Additional actions</td>
+        </thead>
+        {% for an in anime %}
+        <tr>
+            <td><a href="/{{ an.id }}/">{{ an.id }}</a></td>
+            <td>{{ an.anime_name }}</td>
+            <td>{{ an.rating }}</td>
+            <td>{{ an.watching }}</td>
+            <td>
+                <form method="post" action="/{{ an.id }}/delete">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -16,7 +16,10 @@ redis = Redis(settings.REDIS_HOST, port=int(settings.REDIS_PORT))
 
 class AnimeCreateView(View):
     def get(self, request):
-        anime = AnimeWatching.objects.all()
+        if request.user.is_anonymous:
+            anime = []
+        else:
+            anime = AnimeWatching.objects.filter(user=request.user)
         form = AnimeForm()
 
         return render(request, 'create_instance.html', {

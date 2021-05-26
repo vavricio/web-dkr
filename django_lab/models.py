@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
 from redis import Redis
 
 redis = Redis(settings.REDIS_HOST, port=int(settings.REDIS_PORT))
@@ -26,11 +27,13 @@ class AnimeWatching(models.Model):
         ('2/10', '2/10'),
         ('1/10', '1/10'),
         ('0/10', '0/10'),
+        ('--/10', '--/10'),
     ]
 
     anime_name = models.CharField(max_length=100)
     rating = models.CharField(max_length=5, choices=RATING)
     watching = models.CharField(max_length=50, choices=WATCHING)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def as_dict(self):
         return {

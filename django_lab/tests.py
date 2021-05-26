@@ -13,6 +13,7 @@ class Test(TestCase):
             'anime_name': 'Fullmetal Alchemist',
             'rating': '10/10',
             'watching': 'Finished',
+            'user': 'cio'
         }
         resp = self.client.post('/', data=data, follow=True)
 
